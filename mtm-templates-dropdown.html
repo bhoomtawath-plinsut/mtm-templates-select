@@ -11,9 +11,9 @@
     </style>
     <div id="mtm-templates-dropdown-wrapper">
       <mtm-templates-list id="templates-list" data="{{data}}" data-title="{{dataTitle}}" data-value="{{dataValue}}" parent-selectable="{{parentSelectable}}"></mtm-templates-list>
-    </div>
-    <div id="footer">
-      <div>View and Manage all Templates</div>
+      <div id="footer-wrapper">
+        <content></content>
+      </div>
     </div>
   </template>
   <script>
@@ -24,10 +24,6 @@
         dataTitle: {
           type: String,
           value: 'label'
-        },
-        dataValue: {
-          type: String,
-          value: 'value'
         },
         height: {
           type: String,

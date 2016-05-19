@@ -22,7 +22,9 @@
       <changeable-coral-button id="dropdown-btn" on-tap="_menuButtonTap" icon="down" textpos="before">{{_selectedItem}}</changeable-coral-button>
       <coral-popup-panel auto-reposition auto-resize auto-hide>
         <div id="templates-list-wrapper">
-          <mtm-templates-dropdown id="templates-dropdown" height="{{height}}" data="{{data}}" data-title="{{dataTitle}}" data-value="{{dataValue}}" parent-selectable="{{parentSelectable}}"></mtm-templates-dropdown>
+          <mtm-templates-dropdown id="templates-dropdown" height="{{height}}" data="{{data}}" data-title="{{dataTitle}}" data-value="{{dataValue}}" parent-selectable="{{parentSelectable}}">
+            <content></content>
+          </mtm-templates-dropdown>
         </div>
       </coral-popup-panel>
     </div>
@@ -35,10 +37,6 @@
         dataTitle: {
           type: String,
           value: 'label'
-        },
-        dataValue: {
-          type: String,
-          value: 'value'
         },
         height: String,
         _selectedItem: {
