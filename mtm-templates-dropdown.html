@@ -4,14 +4,25 @@
 <dom-module id="mtm-templates-dropdown">
   <template>
     <style>
-      :host #mtm-templates-dropdown-wrapper {
-        max-height: var(--mtm-templates-dropdown-height);
-        overflow: auto;
+      :host .mtm-templates-dropdown-wrapper{
+        background-color: #2e2e33;
+      }
+      :host .scroller {
+        clear: both;
+        height: calc(100% - 27px);
+        overflow-y: auto;
+      }
+      :host .footer-wrapper {
+        padding: 5px;
+        background: #2e2e33;
+        border-top: solid 1px #1a1a1c;
       }
     </style>
-    <div id="mtm-templates-dropdown-wrapper">
-      <mtm-templates-list id="templates-list" data="{{data}}" data-title="{{dataTitle}}" data-value="{{dataValue}}" parent-selectable="{{parentSelectable}}"></mtm-templates-list>
-      <div id="footer-wrapper">
+    <div class="mtm-templates-dropdown-wrapper">
+      <div class="scroller">
+        <mtm-templates-list id="templates-list" data="[[data]]" data-title="[[dataTitle]]" data-value="{{dataValue}}" parent-selectable="[[parentSelectable]]"></mtm-templates-list>
+      </div>
+      <div class="footer-wrapper">
         <content></content>
       </div>
     </div>
@@ -25,16 +36,7 @@
           type: String,
           value: 'label'
         },
-        height: {
-          type: String,
-          value: '500px',
-          observer: '_applyDynamicStyle'
-        },
         parentSelectable: Boolean
-      },
-      _applyDynamicStyle: function () {
-        this.customStyle['--mtm-templates-dropdown-height'] = this.height;
-        this.updateStyles();
       }
     });
   </script>

@@ -2,8 +2,8 @@
 <dom-module id="mtm-templates-list">
   <template>
     <div class="mtm-templates-list-wrapper">
-      <template is="dom-repeat" id="list" items="{{data}}">
-        <mtm-templates-list-node data="{{item}}" data-title="{{dataTitle}}" data-value="{{dataValue}}" data-level="{{_dataLevel}}" parent-selectable="{{parentSelectable}}"></mtm-templates-list-node>
+      <template is="dom-repeat" id="list" items="[[data]]">
+        <mtm-templates-list-node data="[[item]]" data-title="[[dataTitle]]" data-value="[[dataValue]]" data-level="{{_dataLevel}}" parent-selectable="[[parentSelectable]]"></mtm-templates-list-node>
       </template>
     </div>
   </template>

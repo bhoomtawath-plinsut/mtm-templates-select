@@ -22,6 +22,10 @@
     Polymer({
       is: 'changeable-coral-button',
       properties: {
+        target: {
+          type: Object,
+          observer: 'obserTarget'
+        },
         _classBtn: String,
         /**
          * Set state to selected

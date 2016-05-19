@@ -1,21 +1,35 @@
 <dom-module id="mtm-templates-list-item">
   <template>
     <style>
+      :host .mtm-templates-list-item-wrapper {
+        padding: 5px 10px;
+      }
       :host .indent {
         padding-left: var(--mtm-templates-list-item-custom-padding);
       }
       :host .parent-node {
-        background-color: #0b97c4;
+        background-color: #47474F;
+        color: #c2c2c2;
+        padding: 5px 8px;
+        text-transform: uppercase;
+        cursor: var(--mtm-templates-list-item-parent-cursor);
+        font-weight: bold;
       }
-      :host .parent-node {
-        background-color: #0b97c4;
+      :host .child-node {
+        cursor: pointer;
+      }
+      :host .child-node:hover {
+        background-color: #38383e;
+        color: white;
+      }
+      :host .label {
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     </style>
-    <div on-click="_handleClick">
-      <template is="dom-if" if="{{dataLevel > 0}}">
-        <span class="indent"></span>
-      </template>
-      {{_label}}
+    <div class$="{{_itemClasses}}" on-click="_handleClick">
+      <span class="indent"></span>
+      <span class="label">[[_label]]</span>
     </div>
   </template>
   <script>
@@ -32,15 +46,19 @@
           computed: '_updateLabel(dataTitle, data)'
         },
         indent: {
-          type: String,
-          value: '15'
+          type: Number,
+          value: 15
         },
         dataLevel: {
           type: Number,
           observer: '_applyDynamicStyle'
         },
-        isParent: Boolean,
+        isParent: {
+          type: Boolean,
+          observer: '_updateItemClasses'
+        },
         parentSelectable: Boolean,
+        _itemClasses: String,
         _label: String
       },
       _updateLabel: function (title, collection) {
@@ -48,8 +66,13 @@
           this._label = collection[title];
         }
       },
+      _updateItemClasses: function () {
+        this._itemClasses = 'mtm-templates-list-item-wrapper ' + (this.isParent ? 'parent-node' : 'child-node');
+        return this._itemClasses;
+      },
       _applyDynamicStyle: function () {
         this.customStyle['--mtm-templates-list-item-custom-padding'] = (this.indent * this.dataLevel) + 'px';
+        this.customStyle['--mtm-templates-list-item-parent-cursor'] = this.parentSelectable ? 'pointer' : 'default';
         this.updateStyles();
       },
       _handleClick: function () {
