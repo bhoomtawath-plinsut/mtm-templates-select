@@ -1,0 +1,41 @@
+{
+  "name": "mtm-templates-tree",
+  "authors": [
+    "Bhoomtawath Plinsut <bhoomtawath.plinsut@thomsonreuters.com>"
+  ],
+  "keywords": [
+    "web component",
+    "polymer",
+    "jet",
+    "thomson reuters",
+    "eikon",
+    "seed"
+  ],
+  "description": "A drop down with a tree structure as a list",
+  "main": "mtm-templates-dropdown.html",
+  "license": "Apache-2.0",
+  "homepage": "",
+  "ignore": [
+    "/.gitignore",
+    "/test/",
+    "package.json",
+    "Grunfile.js"
+  ],
+  "dependencies": {
+    "coral-tree": "^1.0.22",
+    "uifr-app": "~1.0.2",
+    "coral-button": "~1.0.2",
+    "iron-selector": "PolymerElements/iron-selector#^1.0.0",
+    "coral-popup-panel": "^1.0.30",
+    "coral-list": "^1.0.18"
+  },
+  "devDependencies": {
+    "uifr-component-tester": "^1.0.0"
+  },
+  "x-meta": {
+    "released": true,
+    "build": {
+      "include-files": []
+    }
+  }
+}

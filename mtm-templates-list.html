@@ -1,0 +1,39 @@
+<link rel="import" href="mtm-templates-list-node.html">
+<dom-module id="mtm-templates-list">
+  <template>
+    <div class="mtm-templates-list-wrapper">
+      <template is="dom-repeat" id="list" items="{{data}}">
+        <mtm-templates-list-node data="{{item}}" data-title="{{dataTitle}}" data-value="{{dataValue}}" data-level="{{_dataLevel}}" parent-selectable="{{parentSelectable}}"></mtm-templates-list-node>
+      </template>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'mtm-templates-list',
+      properties: {
+        data: {
+          type: Array,
+          notify: true
+        },
+        dataTitle: {
+          type: String,
+          value: 'title',
+        },
+        dataValue: {
+          type: String,
+          value: 'value'
+        },
+        parentSelectable: Boolean,
+        _dataLevel: {
+          type: Number,
+          value: 0
+        }
+      },
+      ready: function () {
+        this.$$('.mtm-templates-list-wrapper').addEventListener('mtmTemplateSelected', function (e) {
+          this.fire('onSelect', e.detail);
+        }.bind(this));
+      }
+    });
+  </script>
+</dom-module>

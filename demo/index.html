@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>mtm-templates-tree</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="../mtm-templates-select.html">
+    <link rel="import" href="../bower_components/uifr-core-style/resources/demo/demo.html">
+    <style>
+      demo-block div {
+        margin-top: 5px;
+      }
+
+      demo-block code {
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body is="uifr-app" unresolved>
+    <demo-region layout="column">
+      <demo-block>
+        <demo-block-header spacing>
+          <demo-block-header >Default</demo-block-header>
+        </demo-block-header>
+        <mtm-templates-select id="templates-tree" data-title="title" data-value="id"></mtm-templates-select>
+        <script>
+          // default
+          var templatesTree = document.querySelector('#templates-tree');
+          templatesTree.addEventListener('onSelect', function (evn) {
+            console.log(evn);
+          });
+          templatesTree.addEventListener('onSelect', function (evn) {
+            console.log('onSelect', evn);
+          });
+          (function () {
+            document.addEventListener('WebComponentsReady', function () {
+              var treeData = [
+                {
+                  "id": 1,
+                  "title": "Create New Template",
+                  "nodes": []
+                },
+                {
+                  "id": 2,
+                  "title": "Current Screen Template",
+                  "nodes": []
+                },
+                {
+                  "id": 3,
+                  "title": "Sample Templates",
+                  "nodes": [
+                    {
+                      "id": 13,
+                      "title": "Nigeria",
+                      "nodes": []
+                    },
+                    {
+                      "id": 14,
+                      "title": "South Africa",
+                      "nodes": []
+                    }
+                  ]
+                },
+                {
+                  "id": 4,
+                  "title": "User-defined Templates",
+                  "nodes": [
+                    {
+                      "id": 21,
+                      "title": "China",
+                      "nodes": []
+                    },
+                    {
+                      "id": 22,
+                      "title": "Malaysia",
+                      "nodes": []
+                    }
+                  ]
+                }
+              ];
+              var listData = [
+                {
+                  "id": 1,
+                  "title": "Create New Template"
+                },
+                {
+                  "id": 2,
+                  "title": "Current Screen Template",
+                  "nodes": []
+                }, {
+                  id: 3,
+                  title: "Predefined Templates",
+                  "nodes": [
+                    {
+                      "title": "Cross Asset"
+                    },
+                    {
+                      "title": "Undefined"
+                    }
+                  ]
+                }
+              ];
+              templatesTree.data = listData;
+            });
+          })();
+        </script>
+      </demo-block>
+    </demo-region>
+  </body>
+</html>

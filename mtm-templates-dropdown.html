@@ -1,0 +1,45 @@
+<link rel="import" href="bower_components/uifr-app/uifr-app.html">
+<link rel="import" href="mtm-templates-list.html">
+
+<dom-module id="mtm-templates-dropdown">
+  <template>
+    <style>
+      :host #mtm-templates-dropdown-wrapper {
+        max-height: var(--mtm-templates-dropdown-height);
+        overflow: auto;
+      }
+    </style>
+    <div id="mtm-templates-dropdown-wrapper">
+      <mtm-templates-list id="templates-list" data="{{data}}" data-title="{{dataTitle}}" data-value="{{dataValue}}" parent-selectable="{{parentSelectable}}"></mtm-templates-list>
+    </div>
+    <div id="footer">
+      <div>View and Manage all Templates</div>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'mtm-templates-dropdown',
+      properties: {
+        data: Array,
+        dataTitle: {
+          type: String,
+          value: 'label'
+        },
+        dataValue: {
+          type: String,
+          value: 'value'
+        },
+        height: {
+          type: String,
+          value: '500px',
+          observer: '_applyDynamicStyle'
+        },
+        parentSelectable: Boolean
+      },
+      _applyDynamicStyle: function () {
+        this.customStyle['--mtm-templates-dropdown-height'] = this.height;
+        this.updateStyles();
+      }
+    });
+  </script>
+</dom-module>

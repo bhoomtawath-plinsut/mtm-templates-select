@@ -1,0 +1,66 @@
+<dom-module id="mtm-templates-list-item">
+  <template>
+    <style>
+      :host .indent {
+        padding-left: var(--mtm-templates-list-item-custom-padding);
+      }
+      :host .parent-node {
+        background-color: #0b97c4;
+      }
+      :host .parent-node {
+        background-color: #0b97c4;
+      }
+    </style>
+    <div on-click="_handleClick">
+      <template is="dom-if" if="{{dataLevel > 0}}">
+        <span class="indent"></span>
+      </template>
+      {{_label}}
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'mtm-templates-list-item',
+      properties: {
+        data: {
+          type: Object,
+          notify: true
+        },
+        dataTitle: {
+          type: String,
+          value: 'title',
+          computed: '_updateLabel(dataTitle, data)'
+        },
+        dataValue: {
+          type: String,
+          value: 'value'
+        },
+        indent: {
+          type: String,
+          value: '15'
+        },
+        dataLevel: {
+          type: Number,
+          observer: '_applyDynamicStyle'
+        },
+        isParent: Boolean,
+        parentSelectable: Boolean,
+        _label: String
+      },
+      _updateLabel: function (title, collection) {
+        if (collection) {
+          this._label = collection[title];
+        }
+      },
+      _applyDynamicStyle: function () {
+        this.customStyle['--mtm-templates-list-item-custom-padding'] = (this.indent * this.dataLevel) + 'px';
+        this.updateStyles();
+      },
+      _handleClick: function () {
+        if (!this.parentSelectable && !this.isParent) {
+          this.fire('mtmTemplateSelected', this.data);
+        }
+      }
+    });
+  </script>
+</dom-module>

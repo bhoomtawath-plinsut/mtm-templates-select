@@ -1,0 +1,133 @@
+<link rel="import" href="bower_components/uifr-app/uifr-app.html">
+<link rel="import" href="changeable-coral-button.html">
+<link rel="import" href="bower_components/coral-icon/coral-icon.html">
+<link rel="import" href="bower_components/coral-popup-panel/coral-popup-panel.html">
+<link rel="import" href="mtm-templates-dropdown.html">
+
+<dom-module id="mtm-templates-select">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+      }
+      :host .mtm-templates-tree-wrapper {
+        display: inline-block;
+        position: relative;
+      }
+      :host button {
+        width: inherit;
+      }
+    </style>
+    <div class="mtm-templates-dropdown-wrapper" on-select="_handleSelect">
+      <changeable-coral-button id="dropdown-btn" on-tap="_menuButtonTap" icon="down" textpos="before">{{_selectedItem}}</changeable-coral-button>
+      <coral-popup-panel auto-reposition auto-resize auto-hide>
+        <div id="templates-list-wrapper">
+          <mtm-templates-dropdown id="templates-dropdown" height="{{height}}" data="{{data}}" data-title="{{dataTitle}}" data-value="{{dataValue}}" parent-selectable="{{parentSelectable}}"></mtm-templates-dropdown>
+        </div>
+      </coral-popup-panel>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'mtm-templates-select',
+      properties: {
+        data: Array,
+        dataTitle: {
+          type: String,
+          value: 'label'
+        },
+        dataValue: {
+          type: String,
+          value: 'value'
+        },
+        height: String,
+        _selectedItem: {
+          type: String,
+          observer: '_handleSelectedItemChange'
+        },
+        /**
+         * @private
+         * @default 'small'
+         */
+        _size: {
+          type: String,
+          value: 'small'
+        }
+      },
+      ready: function () {
+        this._wrapper = this.$$('.mtm-templates-dropdown-wrapper');
+        this.popupPanel = this.$$('coral-popup-panel');
+        this.toggleBtn = this.$$('#dropdown-btn');
+//        this.tree = this.$$('#tree');
+        this.dropdownBtn = this.$$('#dropdown-btn');
+        this.popupPanel.target = this._getWrapperId();
+        this.parentSelectable = false;
+        this.templateDropdown = this.$$('#templates-dropdown');
+        this.templateDropdown.addEventListener('onSelect', function(evn) {
+          this._closeList();
+          this._selectedItem = evn.detail[this.dataTitle];
+          this.fire('onSelect', evn.detail);
+        }.bind(this));
+      },
+      _handleSelectedItemChange: function () {
+        this.dropdownBtn.refresh();
+      },
+      /**
+       * Open popup panel on button click
+       */
+      _menuButtonTap: function () {
+        this._menuClicked = true;
+        if (!this.popupPanel.isShown()) {
+          // we do both the openlist and focus as there may be the case where the input is disabled and can't fire the list
+          this._openList();
+        } else {
+          this._closeList();
+        }
+      },
+      _openList: function () {
+        //this._setPopupPanelWidth();
+        this.popupPanel.show();
+      },
+      _closeList: function () {
+        this.popupPanel.hide();
+      },
+      /**
+       * lifted from https://github.com/thomsonreuters/coral-radio-button.git
+       * @returns {String} a pseudo unique id combing random generators
+       * @private
+       */
+      _guid: function () {
+        return this._s4() + this._s4() + '-' + this._s4() + '-' + this._s4() + '-' + this._s4() + '-' + this._s4() + this._s4() + this._s4();
+      },
+      /**
+       * @private
+       * @returns {String} random string id
+       */
+      _s4: function () {
+        return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+      },
+      /**
+       * @private
+       * @returns {String} wrapper id
+       */
+      _getWrapperId: function () {
+        if (!this._wrapperId) {
+          // scan for the class
+          var className = 'mtm-templates-tree-wrapper';
+          this._wrapperId = className + '-' + this._guid();
+          this._wrapper.id = this._wrapperId;
+        }
+        return this._wrapperId;
+      },
+      /**
+       * seems to be a race condition, so we'll set this if needed before we display the panel
+       * could also be handy if the width changes
+       * @private
+       */
+      _setPopupPanelWidth: function () {
+        this.popupPanel.width = this._wrapper.clientWidth + 'px';
+      }
+    });
+  </script>
+</dom-module>
+

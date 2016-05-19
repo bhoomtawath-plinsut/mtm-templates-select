@@ -1,0 +1,141 @@
+<link rel="import" href="bower_components/uifr-app/uifr-app.html">
+<link rel="import" href="bower_components/coral-icon/coral-icon.html">
+<dom-module id="changeable-coral-button">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+      }
+      :host button {
+        width: inherit;
+      }
+      :host[disabled] {
+        pointer-events: none;
+      }
+    </style>
+    <button id="button" disabled$="[[disabled]]" readonly$="[[readonly]]" class$="{{_classBtn}}">
+      <content></content>
+      <coral-icon icon$="[[icon]]"></coral-icon>
+    </button>
+  </template>
+  <script>
+    Polymer({
+      is: 'changeable-coral-button',
+      properties: {
+        _classBtn: String,
+        /**
+         * Set state to selected
+         *
+         */
+        selected: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
+        },
+        /**
+         * Set state to disabled
+         *
+         */
+        disabled: {
+          type: Boolean,
+          value: false
+        },
+        /**
+         * Set state to read-only
+         *
+         */
+        readonly: {
+          type: Boolean,
+          value: false
+        },
+        /**
+         * Customizes text alignment when specified alongside `icon` property
+         * Value can be `before` or `after`
+         *
+         */
+        textpos: {
+          type: String,
+          value: 'after'
+        },
+        /**
+         * Removes background when specified alongside `icon` property
+         *
+         */
+        plain: {
+          type: Boolean,
+          value: false
+        },
+        /**
+         * Customize button size. Value can be `small` or `large`
+         */
+        size: {
+          type: String,
+          value: ''
+        },
+        /**
+         * Specify icon to display in button. Value can be icon name
+         */
+        icon: {
+          type: String,
+          value: ''
+        },
+        /**
+         * Set state to call-to-action
+         */
+        cta: {
+          type: Boolean,
+          value: false
+        },
+        /**
+         * Set button to store the selected state
+         */
+        toggle: {
+          type: Boolean,
+          value: false
+        }
+      },
+      refresh: function() {
+        this._classBtn = this._setClasses(this.selected,this.textpos,this.plain,this.size,this.icon,this.cta);
+      },
+      // Inspect relevant properties and generate class attribute value, assign to closure variable
+      _setToggle: function () {
+        this.selected = !this.selected;
+      },
+      _setClasses: function (selected, textpos, plain, size, icon, cta) {
+        var r = [];
+        if (icon) {
+          if (this.$$('button').textContent.trim() !== '') {
+            r.push('inline-icon');
+          }
+          else {
+            r.push('icon');
+            if (plain) {
+              this.cta = false;
+              this.size = '';
+              r.push('icon-plain');
+            }
+          }
+        }
+        if (selected) {
+          r.push('selected');
+        }
+        if (textpos === 'before') {
+          r.push('right-to-left');
+        }
+        if (cta) {
+          r.push('cta');
+        }
+        if (size === 'small' || size === 'large') {
+          r.push(size + '-style');
+        }
+        return r.join(' ');
+      },
+      attached: function () {
+        if (this.toggle && !this.readonly) {
+          this.cta = false;
+          this.addEventListener('click', this._setToggle.bind(this), false);
+        }
+      }
+    });
+  </script>
+</dom-module>

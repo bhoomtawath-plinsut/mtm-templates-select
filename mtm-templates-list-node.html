@@ -1,0 +1,46 @@
+<link rel="import" href="mtm-templates-list-item.html">
+<dom-module id="mtm-templates-list-node">
+  <template>
+    <mtm-templates-list-item data="{{data}}" data-title="{{dataTitle}}" data-value="{{dataValue}}" data-level="{{dataLevel}}" is-parent="{{_isParent}}" parent-selectable="{{parentSelectable}}"></mtm-templates-list-item>
+    <template is="dom-repeat" items="{{data.nodes}}">
+      <mtm-templates-list-node data="{{item}}" data-title="{{dataTitle}}" data-value="{{dataValue}}" data-level="{{_updateDataLevel(dataLevel)}}" parent-selectable="{{parentSelectable}}"></mtm-templates-list-node>
+    </template>
+  </template>
+  <script>
+    Polymer({
+      is: 'mtm-templates-list-node',
+      properties: {
+        data: {
+          type: Object,
+          notify: true
+        },
+        dataTitle: {
+          type: String,
+          value: 'title'
+        },
+        dataValue: {
+          type: String,
+          value: 'value'
+        },
+        dataLevel: {
+          type: Number,
+          value: 0,
+          notify: true
+        },
+        parentSelectable: Boolean,
+        _dataLevel: {
+          type: Number,
+          value: 0,
+          notify: true
+        },
+        _isParent: Boolean
+      },
+      ready: function() {
+        this._isParent = this.data.nodes && this.data.nodes.length > 0;
+      },
+      _updateDataLevel: function (dataLevel) {
+          return dataLevel + 1;
+      }
+    });
+  </script>
+</dom-module>
