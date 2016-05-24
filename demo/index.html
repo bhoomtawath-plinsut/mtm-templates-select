@@ -26,6 +26,7 @@
         <mtm-templates-select id="templates-tree" data-title="title" data-value="id">
           <div>View and Manage all Templates</div>
         </mtm-templates-select>
+        <button type="button" id="add-btn">Add</button>
         <script>
           // default
           var templatesTree = document.querySelector('#templates-tree');
@@ -104,6 +105,10 @@
                 }
               ];
               templatesTree.data = listData;
+
+              document.getElementById('add-btn').addEventListener('click', function () {
+                templatesTree.insertItem('1.nodes', {title: 'untitled'});
+              });
             });
           })();
         </script>

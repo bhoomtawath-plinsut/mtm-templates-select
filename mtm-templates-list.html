@@ -17,7 +17,7 @@
         },
         dataTitle: {
           type: String,
-          value: 'title',
+          value: 'label',
         },
         parentSelectable: Boolean,
         _dataLevel: {
@@ -29,6 +29,9 @@
         this.$$('.mtm-templates-list-wrapper').addEventListener('mtmTemplateSelected', function (e) {
           this.fire('onSelect', e.detail);
         }.bind(this));
+      },
+      insertItem: function (path, item) {
+        this.push('data.' + path, item);
       }
     });
   </script>

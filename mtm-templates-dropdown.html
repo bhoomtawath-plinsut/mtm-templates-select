@@ -20,7 +20,7 @@
     </style>
     <div class="mtm-templates-dropdown-wrapper">
       <div class="scroller">
-        <mtm-templates-list id="templates-list" data="[[data]]" data-title="[[dataTitle]]" data-value="{{dataValue}}" parent-selectable="[[parentSelectable]]"></mtm-templates-list>
+        <mtm-templates-list id="templates-list" data="{{data}}" data-title="[[dataTitle]]" data-value="{{dataValue}}" parent-selectable="[[parentSelectable]]"></mtm-templates-list>
       </div>
       <div class="footer-wrapper">
         <content></content>
@@ -31,12 +31,21 @@
     Polymer({
       is: 'mtm-templates-dropdown',
       properties: {
-        data: Array,
+        data: {
+          type: Array,
+          notify: true
+        },
         dataTitle: {
           type: String,
           value: 'label'
         },
         parentSelectable: Boolean
+      },
+      ready: function () {
+        this._templateList = this.$$('#templates-list');
+      },
+      insertItem: function(path, item) {
+        this._templateList.insertItem(path, item);
       }
     });
   </script>

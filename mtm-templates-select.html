@@ -66,6 +66,9 @@
           this.fire('onSelect', evn.detail);
         }.bind(this));
       },
+      insertItem: function(path, item) {
+        this.templateDropdown.insertItem(path, item);
+      },
       _handleSelectedItemChange: function () {
         this.dropdownBtn.refresh();
       },
