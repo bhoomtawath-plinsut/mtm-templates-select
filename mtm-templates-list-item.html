@@ -75,9 +75,9 @@
         this.customStyle['--mtm-templates-list-item-parent-cursor'] = this.parentSelectable ? 'pointer' : 'default';
         this.updateStyles();
       },
-      _handleClick: function () {
+      _handleMouseUp: function () {
         if (!this.parentSelectable && !this.isParent) {
-          this.fire('mtmTemplateSelected', this.data);
+          this.fire('onSelect', this.data);
         }
       }
     });

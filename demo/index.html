@@ -107,7 +107,7 @@
               templatesTree.data = listData;
 
               document.getElementById('add-btn').addEventListener('click', function () {
-                templatesTree.insertItem('1.nodes', {title: 'untitled'});
+                templatesTree.data.push({title: 'untitled'});
               });
             });
           })();
